@@ -239,4 +239,31 @@ default:
  */
 
 // 1
+let answerStatement1 = "sum will equal 15, with 6 iterations"
 
+// 2
+let answerStatement2 = "there will be 10 instances (final one will be added when .count == 9)"
+
+// 3
+let answerStatement3 = """
+On the x/y plane
+x = y = z
+On the x/z plane
+Nothing special
+On the y/z plane
+"""
+
+// 4
+let answerStatement4 = "a closed range has limits, an upper and lower bound. The upper bound must always be greater than or equal to the lower bound"
+
+// 5
+var i = 10
+while i > 0 {
+    print("T-\(i)")
+    i -= 1
+}
+
+// 6
+for dec in 0..<10 {
+    print(Double(dec) * 0.1)
+}
