@@ -131,5 +131,45 @@ valid
 
 // 2
 func divideIfWhole(_ value: Int, by divisor: Int) -> Int? {
-    
+    if value % divisor == 0 {
+        print("Yes, it divides \(value / divisor) times")
+        return value / divisor
+    } else {
+        print("Not divisible")
+        return nil
+    }
 }
+let testSecondChallengeFunction = divideIfWhole(7, by: 2)
+
+// 3
+//func nilCoalescingDivideIfWhole(_ value: Int, by divisor: Int) -> Int? {
+//    let sendResult = (value % divisor == 0) ?? value / divisor : 0
+//    print("It divides \(result) times")
+//    return sendResult
+//}
+// not clear
+
+// 4
+let fourthChallengeNumber: Int??? = 20
+print(fourthChallengeNumber)
+print(fourthChallengeNumber!)
+
+print(fourthChallengeNumber!!!)
+if let oneUnwrap = fourthChallengeNumber {
+    if let secondUnwrap = oneUnwrap {
+        if let thirdUnwrap = secondUnwrap {
+            print(thirdUnwrap)
+        }
+    }
+}
+func printNumber(_ number: Int???) {
+    if let oneUnwrap = number {
+        if let secondUnwrap = oneUnwrap {
+            guard let thirdUnwrap = secondUnwrap else {
+                return
+            }
+            print(thirdUnwrap)
+        }
+    }
+}
+printNumber(40)
