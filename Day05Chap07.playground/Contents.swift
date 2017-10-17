@@ -272,7 +272,7 @@ let fourthOldArray = [5,4,3,2,1]
 let fourthNewArray = newReverse(array: fourthOldArray)
 
 // 5
-// TODO
+// not clear
 import Foundation
 func randomFromZero(to number: Int) -> Int {
     return Int(arc4random_uniform(UInt32(number)))
@@ -280,9 +280,9 @@ func randomFromZero(to number: Int) -> Int {
 
 func randomized(_ array: [Int]) -> [Int] {
     var temp: [Int] = []
-    while temp.count != array.count {
-        let element = array[randomFromZero(to: array.count)]
-        temp.append(element)
+    for (index, number) in array.enumerated() {
+        let holder = array[randomFromZero(to: array.count - index)]
+        temp.append(number)
     }
     return temp
 }
@@ -290,16 +290,24 @@ func randomized(_ array: [Int]) -> [Int] {
 let fifthArray = randomized([3,2,6,8,0,1,7])
 
 // 6
-// TODO
 func minMax(of numbers: [Int]) -> (min: Int, max: Int)? {
     if numbers.isEmpty {
         return nil
     }
-    var min = 0
-    var max = 0
+    var min = numbers.first!
+    var max = numbers.first!
     
+    for num in numbers {
+        if num < min {
+            min = num
+        } else if num > max {
+            max = num
+        }
+    }
     return (min: min, max: max)
 }
+let sixthArray = [1,2,0,14,66,-2]
+let sixthTuple = minMax(of: sixthArray)
 
 // 7
 let answerStatement7 = """
@@ -318,15 +326,27 @@ valid
 """
 
 // 8
-// TODO
-
+func longerThanEightCharacters(_ dict: [String: String]) {
+    for (_, value) in dict.enumerated() {
+        if value.value.count > 8 {
+            print(value)
+        }
+    }
+}
+let eighthDictionary = ["WA": "Washington", "CA": "California", "MA": "Maine"]
+longerThanEightCharacters(eighthDictionary)
 
 // 9
-// TODO
 func merging(_ dict1: [String: String], with dict2: [String: String]) -> [String: String] {
-    
-    return ["":""]
+    var tempDict = dict1
+    for (key, value) in dict2 {
+        tempDict.updateValue(value, forKey: key)
+    }
+    return tempDict
 }
+let ninthDictA = ["a":"1", "b":"3", "c":"4"]
+let ninthDictB = ["a":"2", "b":"3", "d":"5"]
+let ninthDictC = merging(ninthDictA, with: ninthDictB)
 
 // 10
 // TODO
@@ -335,10 +355,19 @@ func occurencesOfCharacters(in text: String) -> [Character: Int] {
 }
 
 // 11
-// TODO
 func isInvertible(_ dictionary: [String: Int]) -> Bool {
+    var testSet: Set<Int> = Set()
+    for (_, value) in dictionary {
+        if testSet.contains(value) {
+            return false
+        } else {
+            testSet.insert(value)
+        }
+    }
     return true
 }
+let eleventhDict = ["one": 1, "two": 2, "first": 1]
+isInvertible(eleventhDict)
 
 // 12
 var nameTitleLookup: [String: String?] = ["Mary": "Engineer", "Patrick": "Intern", "Raymond": "Hacker"]
