@@ -231,10 +231,10 @@ let appRatings = [
     "The Messenger": [5, 4, 2, 5, 4, 1, 1, 2],
     "Socialise": [2, 1, 2, 2, 1, 2, 4, 2]
 ]
-//
-//let averageRatings = appRatings.forEach {
-//    for (key, value) in {
-//        
-//    }
+
+//var averageRatings: [String: Double] = [:]
+//averageRatings = appRatings.forEach {
+//    let sum = $0.value.reduce(0, $0 + $1)
+//    
 //}
 
