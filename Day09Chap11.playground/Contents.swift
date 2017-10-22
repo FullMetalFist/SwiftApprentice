@@ -144,4 +144,57 @@ struct Circle {
 var circle = Circle(radius: 5)  // circle but no pi
 let circumference = circle.circumference
 
+// mini-exercise
+
+struct CircleMiniExercise {
+    let pi = Double.pi
+    var radius = 0.0
+    var circumference: Double {
+        mutating get {
+            return pi * radius * 2
+        }
+    }
+}
+
+var circleMiniExercise = CircleMiniExercise(radius: 5.0)
+let circumferenceMiniExercise = circle.circumference
+
+/*
+ Challenges
+ */
+
+// challenge 1
+
+struct IceCream {
+    var name: String = "Vanilla"
+    var ingredients: [String] = {
+       return ["Sugar", "Milk", "Cream", "Vanilla"]
+    }()
+}
+
+// challenge 2
+
+struct FuelTank {
+    var level: Double {   // as decimal between 0 and 1
+        willSet {
+            if newValue <= 0.1 {
+                lowFuel = true
+            }
+            else if newValue >= 0.1 {
+                lowFuel = false
+            }
+        }
+    }
+    var lowFuel: Bool = false
+}
+
+struct CarChallenge {
+    let make: String
+    let color: String
+    var fuelTank: FuelTank
+}
+
+var mazda = CarChallenge(make: "Mazda Protoge", color: "Red", fuelTank: FuelTank(level: 0.5, lowFuel: false))
+mazda.fuelTank.level = 0.09
+let mazdaFuelIsLow = mazda.fuelTank.lowFuel
 
