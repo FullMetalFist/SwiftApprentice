@@ -173,10 +173,92 @@ struct ChallengeSimpleDate {
     var month: String
     var day: Int
     mutating func advance() {
-        if day != 30 && day != 31 {
+        if (day != 28 && day != 30 && day != 31) {
             day += 1
+        } else if day == 28 {
+            if month == "February" {
+                day = 1
+                month = "March"
+            } else {
+                day += 1
+            }
         } else if day == 30 {
-            if month == ""
+            day = 1
+            switch month {
+            case "April":
+                month = "May"
+            case "June":
+                month = "July"
+            case "September":
+                month = "October"
+            default:
+                month = "December"
+            }
+        } else if day == 31 {
+            day = 1
+            switch month {
+            case "January":
+                month = "February"
+            case "March":
+                month = "April"
+            case "May":
+                month = "June"
+            case "July":
+                month = "August"
+            case "August":
+                month = "September"
+            case "October":
+                month = "November"
+            default:
+                month = "January"
+            }
         }
+    }
+}
+var challengeSimpleDate = ChallengeSimpleDate(month: "February", day: 28)
+challengeSimpleDate.advance()
+challengeSimpleDate.day
+challengeSimpleDate.month
+
+// 3
+struct ChallengeMath {
+    static func factorial(of number: Int) -> Int {
+        return (1...number).reduce(1, *)
+    }
+    static func isEven(number: Int) -> Bool {
+        return number % 2 == 0
+    }
+    static func isOdd(number: Int) -> Bool {
+        return number % 2 == 1
+    }
+}
+
+// 3
+extension Int {
+    var isEven: Bool {
+        return self % 2 == 0
+    }
+    var isOdd: Bool {
+        return self % 2 == 1
+    }
+}
+// 4    // probably incorrect
+extension Int {
+    static func primeFactors(of value: Int) -> [Int] {
+        var remainingValue = value
+        var testFactor = 2
+        var primes: [Int] = []
+        while testFactor * testFactor <= remainingValue {
+            if remainingValue % testFactor == 0 {
+                primes.append(testFactor)
+                remainingValue /= testFactor
+            } else {
+                testFactor += 1
+            }
+        }
+        if remainingValue > 1 {
+            primes.append(remainingValue)
+        }
+        return primes
     }
 }
