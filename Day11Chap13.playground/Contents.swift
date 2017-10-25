@@ -186,21 +186,80 @@ class List {
         self.name = name
         self.titles = titles
     }
-    func print() {
+    func moviePrint() {
         // print all the movies in the list
+        for movie in titles {
+            print(movie)
+        }
     }
 }
 
 class User {
+    var listDict: [String:List]
     
+    init(listDict: [String:List]) {
+        self.listDict = listDict
+    }
     func addList(_ list: List) {
         // adds the given list to a dictionary of List objects
+        self.listDict.updateValue(list, forKey: list.name)
     }
     func list(forName: String) -> List? {
         // return the list for the provided name
-        return nil
+        // append to dictionary using name
+        return self.listDict[forName]
+        //return nil
+    }
+}
+// create 2 users and have them create and share lists. Have the users modify the same list and call print for both users are all changes reflected?
+let awfulMovies = List(name: "Awful Movies", titles: ["The Room", "Troll 2", "Cannibal Holocaust", "Transformers"])
+let awesomeMovies = List(name: "Awesome Movies", titles: ["Star Wars", "The Godfather", "Incendies"])
+let cultMovies = List(name: "Cult Movies", titles: ["The Wicker Man", "Harold and Maude", "The Warriors", "Aguirre, the Wrath of God"])
+let siskel = User(listDict: ["Awful Movies":awfulMovies])
+let ebert = User(listDict: ["Awesome Movies":awesomeMovies])
+siskel.addList(cultMovies)
+ebert.addList(cultMovies)
+cultMovies.titles.append("The Harder They Come")
+siskel.list(forName: "Cult Movies")?.moviePrint()
+ebert.list(forName: "Cult Movies")?.moviePrint()
+
+// what happens when they are changed to structs?
+struct ListStruct {
+    var name: String
+    var titles: [String]
+    init(name: String, titles: [String]) {
+        self.name = name
+        self.titles = titles
+    }
+    func moviePrint() {
+        // print all the movies in the list
+        for movie in titles {
+            print(movie)
+        }
+    }
+}
+struct UserStruct {
+    var listDict: [String:ListStruct]
+    
+    init(listDict: [String:ListStruct]) {
+        self.listDict = listDict
+    }
+    // requires 'mutating' modifier in struct
+    mutating func addList(_ list: ListStruct) {
+        // adds the given list to a dictionary of List objects
+        self.listDict.updateValue(list, forKey: list.name)
+    }
+    func list(forName: String) -> ListStruct? {
+        // return the list for the provided name
+        // append to dictionary using name
+        return self.listDict[forName]
     }
 }
 
-// create 2 users and have them create and share lists. Have the users modify the same list and call print for both users are all changes reflected?
-// what happens when they are changed to structs?
+let awfulMoviesStruct = ListStruct(name: "Awful Movies", titles: ["The Room", "Troll 2", "Cannibal Holocaust", "Transformers"])
+let awesomeMoviesStruct = ListStruct(name: "Awesome Movies", titles: ["Star Wars", "The Godfather", "Incendies"])
+let cultMoviesStruct = ListStruct(name: "Cult Movies", titles: ["The Wicker Man", "Harold and Maude", "The Warriors", "Aguirre, the Wrath of God"])
+let siskelStruct = UserStruct(listDict: ["Awful Movies": awfulMoviesStruct])
+let ebertStruct = UserStruct(listDict: ["Awesome Movies": awesomeMoviesStruct])
+//siskelStruct.addList(cultMoviesStruct)    // can't add movies with 'let'
+
