@@ -154,7 +154,7 @@ print(area2.radius)
 // // a text representation of this instance
 // public var description: String { get }
 
-struct DeliveryArea: CustomStringConvertible {
+struct DeliveryAreaStruct: CustomStringConvertible {
     let center: Location
     var radius: Double
     
@@ -182,7 +182,80 @@ typealias BoardPiece = String
 let X: BoardPiece = "X"
 let O: BoardPiece = "O"
 
-struct Position {
-    let x = Int
-    let y = Int
+struct Board {
+    var places = ["", "", "", "", "", "", "", "", ""]
+    let winCombo = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [2, 4, 6], [0, 3, 6], [1, 4, 7], [2, 5, 8]]
+    var isGameActive = true
+    func game() {
+        
+        
+    }
 }
+
+// 2
+
+struct TShirt {
+    enum Size {
+        case small
+        case medium
+        case large
+        case extraLarge
+    }
+    enum Color {
+        case white
+        case black
+        case red
+        case blue
+        case green
+        case silver
+        case gold
+    }
+    enum Material {
+        case cotton
+        case polyester
+        case egyptianCotton
+        case silk
+    }
+    let size: Size
+    let color: Color
+    let material: Material
+    
+    func calculateCost() -> Double {
+        var price = 0.0
+        switch size {
+        case .small:
+            price += 1.0
+        case .medium:
+            price += 1.5
+        case .large:
+            price += 2.0
+        case .extraLarge:
+            price += 2.5
+        }
+        switch color {
+        case .white, .black:
+            break
+        case .red, .blue, .green:
+            price += 0.5
+        case .silver:
+            price += 1.5
+        case .gold:
+            price += 2.5
+        }
+        switch material {
+        case .cotton, .polyester:
+            break
+        case .egyptianCotton:
+            price += 1.5
+        case .silk:
+            price += 3.5
+        }
+        return price
+    }
+}
+
+let tShirt = TShirt(size: .large, color: .silver, material: .silk)
+let tShirtPrice = tShirt.calculateCost()
+
+// 3
+
