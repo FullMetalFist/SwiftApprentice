@@ -23,6 +23,7 @@ class Person {
 var graduates: [String] = []
 class Student: Person {
     var grades: [Grade] = []
+    weak var partner: Student?
     func recordGrade(_ grade: Grade) {
         grades.append(grade)
     }
@@ -170,4 +171,77 @@ class TextButton: Button {
 
 // extensibility, identity, understanding the class lifecycle, deinitialization
 
+// retain cycles and weak references
 
+var minsoo = Student(firstName: "Minsoo", lastName: "Kim")
+var soomin = Student(firstName: "Soomin", lastName: "Kang")
+minsoo.partner = soomin
+soomin.partner = minsoo
+//minsoo = nil        // nil cannot be assigned to type 'Student'
+//soomin = nil
+
+/*
+ Challenges
+ */
+
+// 1
+
+class A {
+    init() {
+        print("I'm a")
+    }
+    deinit {
+        print("deinit a")
+    }
+}
+class B: A {
+    override init() {
+        print("I'm b")
+        super.init()
+        print("I'm b")
+    }
+    deinit {
+        print("deinit b")
+    }
+}
+class C: B {
+    override init() {
+        print("I'm c")
+        super.init()
+        print("I'm c")
+    }
+    deinit {
+        print("deinit c")
+    }
+}
+
+var c: C? = C()
+/*
+ I'm c
+ I'm b
+ I'm a
+ I'm b
+ I'm c
+*/
+
+// 2
+
+// 3
+
+let ac = c as! A    // need '!' to downcast
+c = nil
+
+// 4
+
+class StudentBaseballPlayer: StudentAthlete {
+    var position: String
+    var number: Int
+    var battingAverage: Double
+    init(firstName: String, lastName: String, sports: [String], position: String, number: Int, battingAverage: Double) {
+        self.position = position
+        self.number = number
+        self.battingAverage = battingAverage
+        let sportsWithBaseball = ["Baseball"] + sports
+        super.init(firstName: firstName, lastName: lastName, sports: sportsWithBaseball)
+    }
+}
