@@ -66,7 +66,7 @@ enum Icon: String {
     }
 }
 let iconWeather = Icon.weather
-icon.fileName
+iconWeather.fileName
 
 // unordered raw values
 
@@ -106,4 +106,73 @@ func withdraw(amount: Int) -> WithdrawResult {
     }
 }
 
+// ambiguous use case of 'withdraw'
+//let result = withdraw(amount: 99)
+//switch result {
+//case .success(let newBalance):
+//    print("Your new balance is: \(newBalance)")
+//case .error(let message):
+//    print(message)
+//}
+
+enum HTTPMethod {
+    case get
+    case post(body: String)
+}
+let request = HTTPMethod.post(body: "Hello there")
+guard case .post(let body) = request else {
+    fatalError("No message was found")
+}
+print(body)
+
+// enumeration as state machine
+
+enum TrafficLight {
+    case red, yellow, green
+}
+let trafficLight = TrafficLight.red
+
+// mini-exercise
+
+enum Light {
+    case on
+    case off
+}
+
+// case-less enumerations
+
+enum Math: Double {
+    case e = 2.7183
+    static func factorial(of number: Int) -> Int {
+        return (1...number).reduce(1, *)
+    }
+    
+}
+let factorial = Math.factorial(of: 6)
+
+// mini-exercise
+import Foundation
+
+let nestEgg = 25000 * pow(Math.e.rawValue, 0.07 * 20)
+
+// optionals
+
+var age: Int?
+age = 17
+age = nil
+
+switch age {
+case .none:
+    print("No value")
+case .some(let value):
+    print("Got a value \(value)")
+}
+
+let optionalNil: Int? = .none
+optionalNil == nil
+optionalNil == .none
+
+/*
+ Challenge
+ */
 
