@@ -2,6 +2,8 @@
  Enumerations
  */
 
+import Foundation
+
 // declaring an enumeration
 
 enum Month: Int {
@@ -19,6 +21,13 @@ enum Month: Int {
     func monthsUntilWinterBreak() -> Int {
         return Month.december.rawValue - self.rawValue
     }
+    func monthsUntilSummer() -> Int {
+        var summer = Month.june.rawValue - self.rawValue
+        if summer < 0{
+            summer += 12
+        }
+        return summer
+    }
 }
 func semester(for month: Month) -> String {
     switch month {
@@ -35,6 +44,8 @@ semester(for: month)
 month = .september
 semester(for: month)
 month = .june
+semester(for: month)
+month = .july
 semester(for: month)
 
 // mini-exercise
@@ -151,7 +162,6 @@ enum Math: Double {
 let factorial = Math.factorial(of: 6)
 
 // mini-exercise
-import Foundation
 
 let nestEgg = 25000 * pow(Math.e.rawValue, 0.07 * 20)
 
@@ -176,3 +186,43 @@ optionalNil == .none
  Challenge
  */
 
+// 1
+
+func countCoins(_ coins: [Coin]) -> Int {
+    var bank = 0
+    coins.forEach { coin in
+        bank += coin.rawValue
+    }
+    return bank
+}
+countCoins(coinPurse)
+
+// 2, had to peek
+
+let monthsUntilSummer = month.monthsUntilSummer()
+
+// 3
+
+enum Direction {
+    case north
+    case south
+    case east
+    case west
+    func orientation(x: Int, y: Int) -> (Int, Int) {
+        var dx = 0
+        var dy = 0
+        switch self {
+        case .north:
+            dx = x + 1
+        case .south:
+            dx = x - 1
+        case .east:
+            dy = y + 1
+        case .west:
+            dy = y - 1
+        }
+        return (dx, dy)
+    }
+}
+
+let movements: [Direction] = [.north, .north, .west, .south, .west, .south, .south, .east, .east, .south, .east]

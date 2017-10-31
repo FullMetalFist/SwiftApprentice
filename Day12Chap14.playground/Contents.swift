@@ -225,6 +225,7 @@ var c: C? = C()
 */
 
 // 2
+// not sure
 
 // 3
 
@@ -243,5 +244,28 @@ class StudentBaseballPlayer: StudentAthlete {
         self.battingAverage = battingAverage
         let sportsWithBaseball = ["Baseball"] + sports
         super.init(firstName: firstName, lastName: lastName, sports: sportsWithBaseball)
+    }
+}
+// kind of a drag to have to init *everything*, but we have to do it in order to make the object complete
+
+// 5
+
+class Customer {
+    let name: String
+    var orders: [Order] = []
+    init(name: String) {
+        self.name = name
+    }
+    func add(_ order: Order) {
+        order.customer = self
+        orders.append(order)
+    }
+}
+
+class Order {
+    let product: String
+    weak var customer: Customer?
+    init(product: String) {
+        self.product = product
     }
 }
