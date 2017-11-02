@@ -303,3 +303,64 @@ extension Student: Hashable {
         return email.hashValue
     }
 }
+
+let marshall = Student(email: "marshall@marsh.net", firstName: "Marshall", lastName: "Mathers")
+let lockerMap = [marshall: "23A"]
+
+// custom string convertible
+
+extension Student: CustomStringConvertible {
+    var description: String {
+        return "\(firstName) \(lastName)"
+    }
+}
+print(marshall)
+
+/*
+ Challenges
+ */
+
+protocol Pet {
+    var wasFed: Bool { get set }
+}
+protocol FlyingPet: Pet {
+    var isCaged: Bool { get set }
+    var isCageCleaned: Bool { get set }
+}
+protocol SwimmingPet: Pet {
+    var inTank: Bool { get set }
+    var isTankCleaned: Bool { get set }
+}
+protocol WalkablePet: Pet {
+    var isWalked: Bool { get set }
+}
+
+struct Bird: FlyingPet {
+    var wasFed: Bool
+    var isCaged: Bool
+    var isCageCleaned: Bool
+}
+
+struct Fish: SwimmingPet {
+    var wasFed: Bool
+    var inTank: Bool
+    var isTankCleaned: Bool
+}
+
+struct Cat: WalkablePet {
+    var wasFed: Bool
+    var isWalked: Bool
+}
+
+struct Dog: WalkablePet {
+    var wasFed: Bool
+    var isWalked: Bool
+}
+
+var parrot = Bird(wasFed: false, isCaged: true, isCageCleaned: false)
+var goldfish = Fish(wasFed: false, inTank: true, isTankCleaned: false)
+var houseCat = Cat(wasFed: false, isWalked: false)
+var houseDog = Dog(wasFed: false, isWalked: false)
+
+let petArray: [Pet] = [parrot, goldfish, houseCat, houseDog]
+
