@@ -28,4 +28,23 @@ public class CheckingAccount: BasicAccount {
         check.cash()
     }
     public override init() { }
+    private var issuedChecks: [Int] = []
+    private var currentCheck = 1
+}
+
+private extension CheckingAccount {
+    func inspectForFraud(with checkNumber: Int) -> Bool {
+        return issuedChecks.contains(checkNumber)
+    }
+    func nextNumber() -> Int {
+        let next = currentCheck
+        currentCheck += 1
+        return next
+    }
+}
+
+extension CheckingAccount: CustomStringConvertible {
+    public var description: String {
+        return "Checking Balance: $\(balance)"
+    }
 }

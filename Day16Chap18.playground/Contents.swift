@@ -118,5 +118,8 @@ class Doctor: ClassyPerson {
 let doctor = Doctor(firstName: "Duran", lastName: "Duran")
 doctor.fullName
 
+// extensions by behavior, extensions by protocol conformance
+
+
 
 
