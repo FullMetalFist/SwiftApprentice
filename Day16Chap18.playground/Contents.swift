@@ -120,6 +120,13 @@ doctor.fullName
 
 // extensions by behavior, extensions by protocol conformance
 
+/*
+ Challenge
+ */
 
+// 1
+Logger.sharedInstance.log()
+
+// 2
 
 
