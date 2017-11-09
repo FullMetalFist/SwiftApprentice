@@ -205,7 +205,8 @@ jukebox[keyPath: song] = "Stairway to Heaven"
 // 1
 
 extension Array {
-    subscript(index: Int) -> (String, String)? {
+    // I peeked
+    subscript(index index: Int) -> (String, String)? {
         guard let value = self[index] as? Int else {
             return nil
         }
