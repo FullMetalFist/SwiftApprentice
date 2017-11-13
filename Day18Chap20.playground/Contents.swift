@@ -14,4 +14,6 @@ if case (_, 0, 0) = coordinate {
     print("along the x axis")
 }
 
-// introducing patterns
+// introducing patterns, basic pattern matching
+
+
