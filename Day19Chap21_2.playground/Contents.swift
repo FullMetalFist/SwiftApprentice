@@ -166,3 +166,62 @@ moveSafely {
 
 // rethrows
 
+func perform(times: Int, movement: () throws -> ()) rethrows {
+    for _ in 1...times {
+        try movement()
+    }
+}
+
+/*
+ Challenges
+ */
+
+// 1
+//import UIKit
+import CoreGraphics
+
+extension CGAffineTransform {
+    var isInvertable: Bool {
+        return abs(a*d - b*c) > CGFloat.ulpOfOne
+    }
+}
+CGAffineTransform().isInvertable
+CGAffineTransform.identity.isInvertable
+
+extension CGAffineTransform: CustomStringConvertible {
+    public var description: String {
+        return [a,b,c,d,tx,ty].reduce("") { $0 + "\($1)"}
+    }
+    func saveInverted() -> CGAffineTransform? {
+        if self.isInvertable {
+            return self.inverted()
+        }
+        return nil
+    }
+}
+
+let scaleByTwo = CGAffineTransform.identity.scaledBy(x: 2, y: 2)
+scaleByTwo.isInvertable
+scaleByTwo.saveInverted()
+
+let scaleBySomething = CGAffineTransform.identity.scaledBy(x: 4, y: 2)
+scaleBySomething.isInvertable
+scaleBySomething.saveInverted()
+
+// 2
+var savedInversion: CGAffineTransform = scaleBySomething
+
+if let tempInversion = scaleBySomething.saveInverted() {
+    savedInversion = tempInversion
+}
+
+savedInversion.saveInverted()
+
+// 3
+extension CGAffineTransform {
+    func checkInverted() throws {
+        
+        // 
+    }
+}
+
