@@ -94,19 +94,59 @@ struct Spaceship {
     var name: String
     var crew: [Spaceman]
     enum CodingKeys: String, CodingKey {
-        case name
+        case name = "spaceship_name"
         case crew
     }
 }
-struct Spaceman: Codable {
+struct Spaceman {
     var name: String
     var race: String
+    enum CodingKeys: String, CodingKey {
+        case name
+        case race
+    }
 }
 
 extension Spaceship: Encodable {
+    // I peeked
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
-        try container.encode(crew, forKey: <#T##Spaceship.CodingKeys#>)
+        try container.encode(crew, forKey: .crew)
+    }
+    
+}
+extension Spaceman: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(race, forKey: .race)
     }
 }
+extension Spaceship: Decodable {
+    enum CrewKeys: String, CodingKey {
+        case captain
+        case officer
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        let crewValues = try decoder.container(keyedBy: CrewKeys.self)
+        let captain: Spaceman = try crewValues.decode(Spaceman.self, forKey: .captain)
+        let officer: Spaceman = try crewValues.decode(Spaceman.self, forKey: .officer)
+        crew = [captain, officer]
+    }
+}
+extension Spaceman: Decodable {
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        race = try values.decode(String.self, forKey: .race)
+    }
+}
+
+let message = "{\"spaceship_name\": \"USS Dude\", \"captain\":{\"name\":\"Spock\", \"race\":\"Human-Vulcan\"},\"officer\":{\"name\": \"Worf\", \"race\":\"Klingon\"}}"
+let spaceship = try JSONDecoder().decode(Spaceship.self, from: message.data(using: .utf8)!)
+
+print(spaceship)
