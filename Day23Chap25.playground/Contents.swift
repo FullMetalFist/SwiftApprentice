@@ -202,3 +202,107 @@ struct NewHockeyRecord: TeamRecord, TieableRecord, DivisionalRecord, CustomStrin
 /*
  Challenges
  */
+
+// 1
+protocol Item: CustomStringConvertible {
+    var name: String { get }
+    var clearance: Bool { get }
+    var msrp: Double { get }
+    var totalPrice: Double { get }
+}
+
+// clothes do not have sales tax, all other items are taxed 7.5%
+// on clearance, food items are discounted 50%, clothes 25%, electronics 5%
+// items should implement CustomStringConvertible and return name. Food items print expiry date
+
+// I peeked
+
+extension Item {
+    var description: String {
+        return name
+    }
+}
+
+protocol Taxable: Item {
+    var withTax: Double { get }
+}
+
+protocol Clearable: Item {
+    var adjustedMSRP: Double { get }
+}
+
+struct Clothes: Item, Clearable {
+    var name: String
+    var clearance: Bool
+    var msrp: Double
+    var totalPrice: Double
+    
+    var adjustedMSRP: Double {
+        if clearance {
+            return msrp - (msrp * 0.25)
+        } else {
+            return msrp
+        }
+    }
+}
+
+struct Food: Item, Taxable, Clearable {
+    var name: String
+    var clearance: Bool
+    var msrp: Double
+    var totalPrice: Double
+    
+    var withTax: Double {
+        return adjustedMSRP + (adjustedMSRP * 0.075)
+    }
+    var adjustedMSRP: Double {
+        if clearance {
+            return msrp - (msrp * 0.5)
+        } else {
+            return msrp
+        }
+    }
+}
+
+struct Electronics: Item, Taxable, Clearable {
+    var name: String
+    var clearance: Bool
+    var msrp: Double
+    var totalPrice: Double
+    
+    var withTax: Double {
+        return adjustedMSRP + (adjustedMSRP * 0.075)
+    }
+    var adjustedMSRP: Double {
+        if clearance {
+            return msrp - (msrp * 0.05)
+        } else {
+            return msrp
+        }
+    }
+}
+
+
+let banana = Food(name: "banana", clearance: true, msrp: 1.00, totalPrice: 1.00)
+banana.adjustedMSRP
+banana.withTax
+
+// 2
+// I peeked
+
+import Foundation
+
+extension Sequence {
+    func randomized() -> [Element] {
+        return self.sorted {
+            _, _ in
+            arc4random_uniform(2) == 0
+        }
+    }
+}
+
+let countdown = [9,8,7,6,5,4,3,2,1]
+countdown.randomized()
+countdown.randomized()
+countdown.randomized()
+
